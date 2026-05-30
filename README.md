@@ -21,51 +21,6 @@ A secure, mobile-responsive board dashboard hosted on GitHub Pages. The portal p
 
 ---
 
-## Files
-
-| File | Purpose |
-|---|---|
-| `index.html` | The entire portal — login screen and dashboard |
-| `board-data.json` | All content that editors update each month |
-| `README.md` | This file |
-
----
-
-## Deployment
-
-### Step 1 — Create a dedicated GitHub repository
-
-Create a **new, separate** GitHub repository (e.g., `sws-board-portal`). Do not mix this with other school repos. If possible, create it under a school-owned GitHub organization account rather than a personal one.
-
-### Step 2 — Add the files
-
-Copy `index.html` and `board-data.json` into the repo root.
-
-### Step 3 — Enable GitHub Pages
-
-1. Go to **Settings → Pages**
-2. Under Source, select **Deploy from a branch**
-3. Choose **main** branch, **/ (root)** folder
-4. Click Save
-
-GitHub will provide a URL like `https://your-org.github.io/sws-board-portal/`. This typically goes live within a minute or two.
-
-### Step 4 — Change the password
-
-Open `index.html` and find this line near the top of the `<script>` block:
-
-```javascript
-const BOARD_PASSWORD = 'waldorf2025'; // ← CHANGE THIS
-```
-
-Replace `waldorf2025` with your chosen password. Commit and push. The change is live immediately.
-
-### Step 5 — Share
-
-Send the GitHub Pages URL and password to all board members. That's it.
-
----
-
 ## Updating Content Each Month
 
 **All portal content lives in `board-data.json`.** Edit the file, commit, and push. The dashboard polls for changes every 5 minutes — open portals update automatically with no manual refresh needed.
@@ -227,7 +182,7 @@ To get a shareable link for any file or folder:
 
 ## Changing the Password
 
-Edit `index.html`, change `BOARD_PASSWORD`, commit, and push. The new password is live immediately.
+Contact your portal administrator to update the password. Changes take effect immediately.
 
 **When to change the password:**
 - Whenever a board member leaves or their term ends
@@ -239,20 +194,13 @@ Notify all current board members of the new password after changing it.
 
 ## Auto-Refresh
 
-The dashboard fetches `board-data.json` every 5 minutes while open. No manual refresh needed after you push an update.
-
-To change the interval, edit this line in `index.html`:
-```javascript
-const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
-```
+The dashboard automatically refreshes every 5 minutes while open. No manual refresh is needed after you push an update.
 
 ---
 
 ## Security Notes
 
-The password in `index.html` is client-side — it controls access to the dashboard UI, not the underlying files. A technically motivated person could find it in the page source.
-
-**Your real security layer is Google Drive.** Restrict sensitive documents to specific board member email addresses in Drive sharing settings. That way, even if someone gets the portal URL and password, they cannot open the actual documents.
+The dashboard password controls access to the portal UI. **Your real security layer is Google Drive.** Restrict sensitive documents to specific board member email addresses in Drive sharing settings — that way, even if someone obtains the portal URL and password, they cannot open the actual documents.
 
 | Layer | Protection |
 |---|---|
@@ -266,7 +214,7 @@ The password in `index.html` is client-side — it controls access to the dashbo
 
 When a member's term ends or they resign:
 
-- [ ] Change the portal password in `index.html` and push
+- [ ] Contact your portal administrator to change the portal password
 - [ ] Notify remaining board members of the new password
 - [ ] Remove their Google account from all Drive folder sharing
 - [ ] Update their entry in `boardMembers` in `board-data.json`
