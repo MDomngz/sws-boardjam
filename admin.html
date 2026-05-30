@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SWS Board Portal — Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bark:  {50:'#faf6f1',100:'#f0e6d3',200:'#dfc9a8',300:'#c9a87c',400:'#b58a58',500:'#9a6e3a',600:'#7d5630',700:'#634229',800:'#4e3420',900:'#3d281a'},
+            moss:  {50:'#f3f7f0',100:'#e1edda',200:'#bfd9b3',300:'#93bf85',400:'#6aa35a',500:'#4d8440',600:'#3b6832',700:'#2e5127',800:'#25401f',900:'#1c321a'},
+            clay:  {50:'#fdf6f0',100:'#fae5d0',200:'#f3c7a0',300:'#e9a36a',400:'#dc7d3a',500:'#c85e1e',600:'#a44718',700:'#833715',800:'#672c12',900:'#50220e'},
+            cream: '#fdf8f0',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background:#fdf8f0; }
+    h1,h2,h3 { font-family: Georgia, serif; }
+    .section-card { background:#fff; border:1px solid #dfc9a8; border-radius:1rem; padding:1.5rem; margin-bottom:1.5rem; }
+    .field-label { display:block; font-size:.8rem; font-weight:600; color:#7d5630; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.35rem; }
+    .field-input { width:100%; padding:.6rem .85rem; border:1px solid #dfc9a8; border-radius:.6rem; background:#faf6f1; color:#3d281a; font-size:.95rem; outline:none; transition:border-color .15s; }
+    .field-input:focus { border-color:#4d8440; box-shadow:0 0 0 2px rgba(77,132,64,.15); }
+    textarea.field-input { resize:vertical; min-height:80px; }
+    .btn { padding:.55rem 1.1rem; border-radius:.6rem; font-size:.9rem; font-weight:600; cursor:pointer; transition:background .15s,transform .1s; border:none; }
+    .btn:active { transform:scale(.97); }
+    .btn-moss { background:#4d8440; color:#fff; }
+    .btn-moss:hover { background:#3b6832; }
+    .btn-clay { background:#c85e1e; color:#fff; }
+    .btn-clay:hover { background:#a44718; }
+    .btn-bark { background:#f0e6d3; color:#4e3420; }
+    .btn-bark:hover { background:#dfc9a8; }
+    .btn-ghost { background:transparent; color:#7d5630; border:1px solid #c9a87c; }
+    .btn-ghost:hover { background:#f0e6d3; }
+    .item-card { background:#faf6f1; border:1px solid #dfc9a8; border-radius:.75rem; padding:1rem; position:relative; }
+    .remove-btn { position:absolute; top:.6rem; right:.6rem; width:1.6rem; height:1.6rem; border-radius:50%; background:#fae5d0; color:#a44718; font-size:1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; border:none; line-height:1; font-weight:bold; }
+    .remove-btn:hover { background:#f3c7a0; }
+    .tab-btn { padding:.5rem 1rem; border-radius:.5rem .5rem 0 0; font-size:.875rem; font-weight:600; cursor:pointer; border:1px solid #dfc9a8; border-bottom:none; background:#f0e6d3; color:#7d5630; transition:background .15s; }
+    .tab-btn.active { background:#fff; color:#3d281a; }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
+    .toast { position:fixed; bottom:1.5rem; right:1.5rem; background:#2e5127; color:#fff; padding:.75rem 1.25rem; border-radius:.75rem; font-size:.9rem; font-weight:600; z-index:999; opacity:0; transform:translateY(10px); transition:all .3s; pointer-events:none; }
+    .toast.show { opacity:1; transform:none; }
+    .drag-over { border-color:#4d8440 !important; background:#f3f7f0 !important; }
+    select.field-input { appearance:auto; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
+    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.75rem; }
+    @media(max-width:640px) { .grid-2,.grid-3 { grid-template-columns:1fr; } }
+    .move-btn { cursor:pointer; background:#f0e6d3; border:none; border-radius:.4rem; padding:.2rem .4rem; color:#7d5630; font-size:.8rem; }
+    .move-btn:hover { background:#dfc9a8; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<!-- ═══════════════════ LOGIN ═══════════════════ -->
+<div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm border border-bark-200">
+    <div class="text-center mb-7">
+      <div class="text-4xl mb-3">🛠️</div>
+      <h1 class="text-2xl font-bold text-bark-800">Portal Admin</h1>
+      <p class="text-bark-500 text-sm mt-1">Susquehanna Waldorf School</p>
+    </div>
+    <form onsubmit="adminLogin(event)" class="space-y-4">
+      <div>
+        <label class="field-label">Admin Password</label>
+        <input id="adminPw" type="password" class="field-input" placeholder="Enter admin password"/>
+      </div>
+      <div id="loginErr" class="hidden text-clay-600 text-sm text-center font-medium"></div>
+      <button type="submit" class="btn btn-moss w-full py-3 text-base">Enter Admin</button>
+    </form>
+    <p class="text-center text-bark-300 text-xs mt-5">Admin access only — not for board members</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ ADMIN UI ═══════════════════ -->
+<div id="adminUI" class="hidden">
+
+  <!-- Header -->
+  <div class="bg-bark-800 text-white sticky top-0 z-50 shadow-lg">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div>
+        <div class="font-bold">SWS Board Portal — Content Editor</div>
+        <div class="text-bark-300 text-xs" id="dataStatus">Load board-data.json to begin</div>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <button onclick="document.getElementById('fileInput').click()" class="btn btn-bark text-sm">📂 Load JSON</button>
+        <button onclick="downloadJSON()" id="downloadBtn" class="btn btn-moss text-sm" disabled>⬇️ Save & Download</button>
+        <button onclick="adminLogout()" class="btn btn-ghost text-sm text-bark-300 border-bark-600">Sign Out</button>
+      </div>
+    </div>
+  </div>
+  <input type="file" id="fileInput" accept=".json" class="hidden" onchange="loadFile(event)"/>
+
+  <!-- Drop zone (shown before file loaded) -->
+  <div id="dropZone" class="max-w-4xl mx-auto px-4 py-12 text-center">
+    <div id="dropTarget" class="border-2 border-dashed border-bark-300 rounded-2xl p-12 transition-colors cursor-pointer"
+      ondragover="event.preventDefault();this.classList.add('drag-over')"
+      ondragleave="this.classList.remove('drag-over')"
+      ondrop="handleDrop(event)"
+      onclick="document.getElementById('fileInput').click()">
+      <div class="text-5xl mb-4">📄</div>
+      <div class="text-bark-700 font-bold text-lg mb-2">Drop board-data.json here</div>
+      <div class="text-bark-400 text-sm">or click to browse</div>
+      <div class="text-bark-300 text-xs mt-4">Your file never leaves your browser — nothing is uploaded anywhere.</div>
+    </div>
+  </div>
+
+  <!-- Editor (shown after file loaded) -->
+  <div id="editor" class="hidden max-w-4xl mx-auto px-4 py-6 pb-16">
+
+    <!-- Tabs -->
+    <div class="flex flex-wrap gap-1 mb-0 border-b border-bark-200">
+      <button class="tab-btn active" onclick="switchTab('announcement')">📣 Announcement</button>
+      <button class="tab-btn" onclick="switchTab('agenda')">📋 Agenda</button>
+      <button class="tab-btn" onclick="switchTab('actions')">✅ Actions</button>
+      <button class="tab-btn" onclick="switchTab('fundraising')">💰 Development</button>
+      <button class="tab-btn" onclick="switchTab('news')">📰 News</button>
+      <button class="tab-btn" onclick="switchTab('decisions')">🗳️ Decisions</button>
+      <button class="tab-btn" onclick="switchTab('board')">👤 Board</button>
+      <button class="tab-btn" onclick="switchTab('calendar')">📅 Calendar</button>
+    </div>
+
+    <!-- ── ANNOUNCEMENT ── -->
+    <div id="tab-announcement" class="tab-content active pt-5 space-y-4">
+      <div class="section-card">
+        <h2 class="text-lg font-bold text-bark-800 mb-4">Announcement Banner</h2>
+        <p class="text-bark-500 text-sm mb-4">Shown as an orange bar at the top of every page. Leave <strong>Text</strong> blank to hide the banner.</p>
+        <div class="space-y-3">
+          <div>
+            <label class="field-label">Month Label (shown in nav bar)</label>
+            <input id="meetingMonth" type="text" class="field-input" placeholder="e.g. June 2025"/>
+          </div>
+          <div>
+            <label class="field-label">Banner Label <span class="normal-case font-normal text-bark-400">(bold prefix)</span></label>
+            <input id="announcementLabel" type="text" class="field-input" placeholder="e.g. Meeting Rescheduled:"/>
+          </div>
+          <div>
+            <label class="field-label">Banner Text <span class="normal-case font-normal text-bark-400">(leave blank to hide banner)</span></label>
+            <input id="announcementText" type="text" class="field-input" placeholder="e.g. June meeting moved to June 17 at 6:30 PM."/>
+          </div>
+          <div>
+            <label class="field-label">Banner Link URL <span class="normal-case font-normal text-bark-400">(optional)</span></label>
+            <input id="announcementUrl" type="url" class="field-input" placeholder="https://..."/>
+          </div>
+          <div>
+            <label class="field-label">Chair Message <span class="normal-case font-normal text-bark-400">(shown on Overview tab)</span></label>
+            <textarea id="chairMessage" class="field-input" rows="3" placeholder="Message from the chair…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AGENDA ── -->
+    <div id="tab-agenda" class="tab-content pt-5 space-y-4">
+      <div class="section-card">
+        <h2 class="text-lg font-bold text-bark-800 mb-4">Meeting Agenda</h2>
+        <div class="grid-2 mb-3">
+          <div>
+            <label class="field-label">Meeting Date & Time</label>
+            <input id="agendaDate" type="text" class="field-input" placeholder="Tuesday, June 17, 2025 · 6:30 PM"/>
+          </div>
+          <div>
+            <label class="field-label">Location</label>
+            <input id="agendaLocation" type="text" class="field-input" placeholder="SWS Main Building, Room 12"/>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="field-label">Agenda Drive Link</label>
+          <input id="agendaDriveUrl" type="url" class="field-input" placeholder="https://drive.google.com/..."/>
+        </div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-bark-700">Agenda Items</h3>
+          <button class="btn btn-moss text-sm" onclick="addAgendaItem()">+ Add Item</button>
+        </div>
+        <div id="agendaItems" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- ── ACTION ITEMS ── -->
+    <div id="tab-actions" class="tab-content pt-5 space-y-4">
+      <div class="section-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-bark-800">Action Items</h2>
+          <button class="btn btn-moss text-sm" onclick="addActionItem()">+ Add Item</button>
+        </div>
+        <p class="text-bark-500 text-sm mb-4">Add items after each meeting. Mark completed items as "Done" — they'll appear struck-through on the portal.</p>
+        <div id="actionItems" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- ── FUNDRAISING ── -->
+    <div id="tab-fundraising" class="tab-content pt-5 space-y-4">
+      <!-- Campaign -->
+      <div class="section-card">
+        <h2 class="text-lg font-bold text-bark-800 mb-4">Campaign</h2>
+        <div class="grid-2 mb-3">
+          <div>
+            <label class="field-label">Campaign Name</label>
+            <input id="campaignName" type="text" class="field-input" placeholder="2024–25 Annual Fund"/>
+          </div>
+          <div>
+            <label class="field-label">Campaign Deadline</label>
+            <input id="campaignDeadline" type="text" class="field-input" placeholder="June 30"/>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="field-label">Description</label>
+          <textarea id="campaignDesc" class="field-input" rows="2" placeholder="What the fund supports…"></textarea>
+        </div>
+        <div class="grid-3 mb-3">
+          <div>
+            <label class="field-label">Goal ($)</label>
+            <input id="campaignGoal" type="number" class="field-input" placeholder="120000"/>
+          </div>
+          <div>
+            <label class="field-label">Raised ($)</label>
+            <input id="campaignRaised" type="number" class="field-input" placeholder="87500"/>
+          </div>
+          <div>
+            <label class="field-label">Total Donors</label>
+            <input id="campaignDonors" type="number" class="field-input" placeholder="142"/>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div>
+            <label class="field-label">Board Members Given</label>
+            <input id="boardGiven" type="number" class="field-input" placeholder="7"/>
+          </div>
+          <div>
+            <label class="field-label">Board Size (Total)</label>
+            <input id="boardTotal" type="number" class="field-input" placeholder="9"/>
+          </div>
+        </div>
+      </div>
+      <!-- Prospects -->
+      <div class="section-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-bark-800">Prospect Pipeline</h2>
+          <button class="btn btn-moss text-sm" onclick="addProspect()">+ Add Prospect</button>
+        </div>
+        <div id="prospects" class="space-y-3"></div>
+      </div>
+      <!-- Deadlines -->
+      <div class="section-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-bark-800">Grant & Fundraising Deadlines</h2>
+          <button class="btn btn-moss text-sm" onclick="addDeadline()">+ Add Deadline</button>
+        </div>
+        <div id="deadlines" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- ── NEWS ── -->
+    <div id="tab-news" class="tab-content pt-5 space-y-4">
+      <div class="section-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-bark-800">News & Reports</h2>
+          <button class="btn btn-moss text-sm" onclick="addNewsItem()">+ Add Item</button>
+        </div>
+        <p class="text-bark-500 text-sm mb-4">Replace with 3–5 current items each month. Each links to a document in Google Drive.</p>
+        <div id="newsItems" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- ── DECISIONS ── -->
+    <div id="tab-decisions" class="tab-content pt-5 space-y-4">
+      <div class="section-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-bark-800">Decision Log</h2>
+          <button class="btn btn-moss text-sm" onclick="addDecision()">+ Add Decision</button>
+        </div>
+        <p class="text-bark-500 text-sm mb-4">Add one entry per voted motion after each meeting. New decisions appear at the top of the list.</p>
+        <div id="decisions" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- ── BOARD MEMBERS ── -->
+    <div id="tab-board" class="tab-content pt-5 space-y-4">
+      <div class="section-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-bark-800">Board Members</h2>
+          <button class="btn btn-moss text-sm" onclick="addBoardMember()">+ Add Member</button>
+        </div>
+        <div id="boardMembers" class="space-y-4"></div>
+      </div>
+    </div>
+
+    <!-- ── CALENDAR ── -->
+    <div id="tab-calendar" class="tab-content pt-5 space-y-4">
+      <div class="section-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-bark-800">Calendar Events</h2>
+          <button class="btn btn-moss text-sm" onclick="addCalendarEvent()">+ Add Event</button>
+        </div>
+        <p class="text-bark-500 text-sm mb-4">Dates must be in YYYY-MM-DD format. Events are sorted automatically.</p>
+        <div id="calendarEvents" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- Save bar -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-bark-200 px-4 py-3 flex items-center justify-between gap-4 shadow-lg z-40">
+      <span class="text-bark-500 text-sm hidden sm:block">After downloading, drag the file into your GitHub repo to publish changes.</span>
+      <button onclick="downloadJSON()" class="btn btn-moss px-6 py-3 text-base">⬇️ Save & Download JSON</button>
+    </div>
+
+  </div><!-- /editor -->
+</div><!-- /adminUI -->
+
+<script>
+// ═══════════════════════════════════════════
+// CONFIG — set a separate admin password
+// ═══════════════════════════════════════════
+const ADMIN_PASSWORD = 'swsadmin2025'; // ← CHANGE THIS
+
+let data = null; // holds the parsed JSON
+
+// ── Auth ─────────────────────────────────
+function adminLogin(e) {
+  e.preventDefault();
+  if (document.getElementById('adminPw').value === ADMIN_PASSWORD) {
+    sessionStorage.setItem('sws_admin', '1');
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('adminUI').classList.remove('hidden');
+  } else {
+    const err = document.getElementById('loginErr');
+    err.textContent = 'Incorrect password.';
+    err.classList.remove('hidden');
+    document.getElementById('adminPw').value = '';
+  }
+}
+
+function adminLogout() {
+  sessionStorage.removeItem('sws_admin');
+  location.reload();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('sws_admin') === '1') {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('adminUI').classList.remove('hidden');
+  }
+});
+
+// ── File loading ─────────────────────────
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropTarget').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) readFile(file);
+}
+
+function loadFile(e) {
+  const file = e.target.files[0];
+  if (file) readFile(file);
+}
+
+function readFile(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      data = JSON.parse(e.target.result);
+      populateForms();
+      document.getElementById('dropZone').classList.add('hidden');
+      document.getElementById('editor').classList.remove('hidden');
+      document.getElementById('downloadBtn').disabled = false;
+      document.getElementById('dataStatus').textContent = `Loaded: ${file.name}`;
+      toast('File loaded — edit and download when ready');
+    } catch(err) {
+      alert('Could not parse JSON. Make sure you loaded board-data.json.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ── Populate all forms from data ─────────
+function populateForms() {
+  const d = data;
+
+  // Announcement / meta
+  setValue('meetingMonth', d.meetingMonth);
+  setValue('announcementLabel', d.announcement?.label);
+  setValue('announcementText', d.announcement?.text);
+  setValue('announcementUrl', d.announcement?.url);
+  setValue('chairMessage', d.chairMessage);
+
+  // Agenda
+  setValue('agendaDate', d.agenda?.date);
+  setValue('agendaLocation', d.agenda?.location);
+  setValue('agendaDriveUrl', d.agenda?.driveUrl);
+  renderAgendaItems(d.agenda?.items || []);
+
+  // Actions
+  renderActionItems(d.actionItems || []);
+
+  // Fundraising
+  const c = d.fundraising?.campaign || {};
+  setValue('campaignName', c.name);
+  setValue('campaignDeadline', c.deadline);
+  setValue('campaignDesc', c.description);
+  setValue('campaignGoal', c.goal);
+  setValue('campaignRaised', c.raised);
+  setValue('campaignDonors', c.totalDonors);
+  setValue('boardGiven', c.boardMembersGiven);
+  setValue('boardTotal', c.boardMembersTotal);
+  renderProspects(d.fundraising?.prospects || []);
+  renderDeadlines(d.fundraising?.deadlines || []);
+
+  // News
+  renderNewsItems(d.news || []);
+
+  // Decisions
+  renderDecisions(d.decisions || []);
+
+  // Board
+  renderBoardMembers(d.boardMembers || []);
+
+  // Calendar
+  renderCalendarEvents(d.calendar || []);
+}
+
+function setValue(id, val) {
+  const el = document.getElementById(id);
+  if (el && val !== undefined && val !== null) el.value = val;
+}
+
+// ── Tabs ──────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── Agenda Items ─────────────────────────
+function renderAgendaItems(items) {
+  const el = document.getElementById('agendaItems');
+  el.innerHTML = '';
+  items.forEach((item, i) => el.appendChild(makeAgendaCard(item, i)));
+}
+
+function makeAgendaCard(item = {}, i) {
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.dataset.index = i;
+  div.innerHTML = `
+    <button class="remove-btn" onclick="removeItem('agendaItems', ${i}, renderAgendaItems, 'agenda.items')">×</button>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Title *</label>
+        <input type="text" class="field-input agenda-title" value="${esc(item.title||'')}" placeholder="Agenda item title"/>
+      </div>
+      <div>
+        <label class="field-label">Type</label>
+        <select class="field-input agenda-type">
+          <option value="" ${!item.type?'selected':''}>— none —</option>
+          <option value="action" ${item.type==='action'?'selected':''}>Action (vote)</option>
+          <option value="info" ${item.type==='info'?'selected':''}>Info (report)</option>
+          <option value="discussion" ${item.type==='discussion'?'selected':''}>Discussion</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Duration</label>
+        <input type="text" class="field-input agenda-duration" value="${esc(item.duration||'')}" placeholder="e.g. 10 min"/>
+      </div>
+      <div>
+        <label class="field-label">Drive Link</label>
+        <input type="url" class="field-input agenda-drive" value="${esc(item.driveUrl||'')}" placeholder="https://drive.google.com/..."/>
+      </div>
+    </div>
+    <div>
+      <label class="field-label">Description</label>
+      <textarea class="field-input agenda-desc" rows="2" placeholder="Optional detail…">${esc(item.description||'')}</textarea>
+    </div>`;
+  return div;
+}
+
+function addAgendaItem() {
+  const el = document.getElementById('agendaItems');
+  const count = el.children.length;
+  el.appendChild(makeAgendaCard({}, count));
+}
+
+function collectAgendaItems() {
+  return Array.from(document.querySelectorAll('#agendaItems .item-card')).map(card => ({
+    title: card.querySelector('.agenda-title').value.trim(),
+    type: card.querySelector('.agenda-type').value || undefined,
+    duration: card.querySelector('.agenda-duration').value.trim() || undefined,
+    driveUrl: card.querySelector('.agenda-drive').value.trim() || undefined,
+    description: card.querySelector('.agenda-desc').value.trim() || undefined,
+  })).filter(i => i.title);
+}
+
+// ── Action Items ──────────────────────────
+function renderActionItems(items) {
+  const el = document.getElementById('actionItems');
+  el.innerHTML = '';
+  items.forEach((item, i) => el.appendChild(makeActionCard(item, i)));
+}
+
+function makeActionCard(item = {}, i) {
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.innerHTML = `
+    <button class="remove-btn" onclick="this.closest('.item-card').remove()">×</button>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Title *</label>
+        <input type="text" class="field-input ai-title" value="${esc(item.title||'')}" placeholder="Action item description"/>
+      </div>
+      <div>
+        <label class="field-label">Owner</label>
+        <input type="text" class="field-input ai-owner" value="${esc(item.owner||'')}" placeholder="Board member name"/>
+      </div>
+    </div>
+    <div class="grid-3 mb-2">
+      <div>
+        <label class="field-label">Status</label>
+        <select class="field-input ai-status">
+          <option value="open" ${item.status==='open'||!item.status?'selected':''}>Open</option>
+          <option value="inprogress" ${item.status==='inprogress'?'selected':''}>In Progress</option>
+          <option value="done" ${item.status==='done'?'selected':''}>Done</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">Due Date</label>
+        <input type="text" class="field-input ai-due" value="${esc(item.dueDate||'')}" placeholder="e.g. June 17, 2025"/>
+      </div>
+      <div>
+        <label class="field-label">From Meeting</label>
+        <input type="text" class="field-input ai-from" value="${esc(item.fromMeeting||'')}" placeholder="e.g. May 13, 2025"/>
+      </div>
+    </div>
+    <div>
+      <label class="field-label">Notes</label>
+      <input type="text" class="field-input ai-notes" value="${esc(item.notes||'')}" placeholder="Optional progress notes…"/>
+    </div>`;
+  return div;
+}
+
+function addActionItem() {
+  const el = document.getElementById('actionItems');
+  el.appendChild(makeActionCard({}));
+  el.lastElementChild.querySelector('.ai-title').focus();
+}
+
+function collectActionItems() {
+  return Array.from(document.querySelectorAll('#actionItems .item-card')).map(card => ({
+    title: card.querySelector('.ai-title').value.trim(),
+    owner: card.querySelector('.ai-owner').value.trim() || undefined,
+    status: card.querySelector('.ai-status').value,
+    dueDate: card.querySelector('.ai-due').value.trim() || undefined,
+    fromMeeting: card.querySelector('.ai-from').value.trim() || undefined,
+    notes: card.querySelector('.ai-notes').value.trim() || undefined,
+  })).filter(i => i.title);
+}
+
+// ── Prospects ─────────────────────────────
+function renderProspects(items) {
+  const el = document.getElementById('prospects');
+  el.innerHTML = '';
+  items.forEach((item, i) => el.appendChild(makeProspectCard(item, i)));
+}
+
+function makeProspectCard(item = {}) {
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.innerHTML = `
+    <button class="remove-btn" onclick="this.closest('.item-card').remove()">×</button>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Prospect Name *</label>
+        <input type="text" class="field-input pr-name" value="${esc(item.name||'')}" placeholder="Family or foundation name"/>
+      </div>
+      <div>
+        <label class="field-label">Stage</label>
+        <select class="field-input pr-stage">
+          <option value="Identification" ${item.stage==='Identification'?'selected':''}>Identification</option>
+          <option value="Cultivation" ${item.stage==='Cultivation'?'selected':''}>Cultivation</option>
+          <option value="Solicitation" ${item.stage==='Solicitation'?'selected':''}>Solicitation</option>
+          <option value="Stewardship" ${item.stage==='Stewardship'?'selected':''}>Stewardship</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <label class="field-label">Ask Amount ($)</label>
+        <input type="number" class="field-input pr-ask" value="${item.askAmount||''}" placeholder="10000"/>
+      </div>
+      <div>
+        <label class="field-label">Board Lead</label>
+        <input type="text" class="field-input pr-lead" value="${esc(item.boardLead||'')}" placeholder="Board member name"/>
+      </div>
+    </div>`;
+  return div;
+}
+
+function addProspect() {
+  document.getElementById('prospects').appendChild(makeProspectCard({}));
+}
+
+function collectProspects() {
+  return Array.from(document.querySelectorAll('#prospects .item-card')).map(card => ({
+    name: card.querySelector('.pr-name').value.trim(),
+    stage: card.querySelector('.pr-stage').value,
+    askAmount: Number(card.querySelector('.pr-ask').value) || undefined,
+    boardLead: card.querySelector('.pr-lead').value.trim() || undefined,
+  })).filter(i => i.name);
+}
+
+// ── Deadlines ─────────────────────────────
+function renderDeadlines(items) {
+  const el = document.getElementById('deadlines');
+  el.innerHTML = '';
+  items.forEach(item => el.appendChild(makeDeadlineCard(item)));
+}
+
+function makeDeadlineCard(item = {}) {
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.innerHTML = `
+    <button class="remove-btn" onclick="this.closest('.item-card').remove()">×</button>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Title *</label>
+        <input type="text" class="field-input dl-title" value="${esc(item.title||'')}" placeholder="Grant name or event"/>
+      </div>
+      <div>
+        <label class="field-label">Date (YYYY-MM-DD)</label>
+        <input type="date" class="field-input dl-date" value="${esc(item.date||'')}"/>
+      </div>
+    </div>
+    <div>
+      <label class="field-label">Description</label>
+      <input type="text" class="field-input dl-desc" value="${esc(item.description||'')}" placeholder="Brief description…"/>
+    </div>`;
+  return div;
+}
+
+function addDeadline() {
+  document.getElementById('deadlines').appendChild(makeDeadlineCard({}));
+}
+
+function collectDeadlines() {
+  return Array.from(document.querySelectorAll('#deadlines .item-card')).map(card => ({
+    title: card.querySelector('.dl-title').value.trim(),
+    date: card.querySelector('.dl-date').value,
+    description: card.querySelector('.dl-desc').value.trim() || undefined,
+  })).filter(i => i.title && i.date);
+}
+
+// ── News ──────────────────────────────────
+function renderNewsItems(items) {
+  const el = document.getElementById('newsItems');
+  el.innerHTML = '';
+  items.forEach(item => el.appendChild(makeNewsCard(item)));
+}
+
+function makeNewsCard(item = {}) {
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.innerHTML = `
+    <button class="remove-btn" onclick="this.closest('.item-card').remove()">×</button>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Title *</label>
+        <input type="text" class="field-input nw-title" value="${esc(item.title||'')}" placeholder="News item title"/>
+      </div>
+      <div>
+        <label class="field-label">Emoji</label>
+        <input type="text" class="field-input nw-emoji" value="${esc(item.emoji||'📄')}" placeholder="📄" style="max-width:80px"/>
+      </div>
+    </div>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Category</label>
+        <input type="text" class="field-input nw-cat" value="${esc(item.category||'')}" placeholder="e.g. Enrollment"/>
+      </div>
+      <div>
+        <label class="field-label">Date</label>
+        <input type="text" class="field-input nw-date" value="${esc(item.date||'')}" placeholder="e.g. June 1, 2025"/>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label class="field-label">Summary</label>
+      <textarea class="field-input nw-summary" rows="2" placeholder="2–3 sentence summary…">${esc(item.summary||'')}</textarea>
+    </div>
+    <div>
+      <label class="field-label">Drive Link</label>
+      <input type="url" class="field-input nw-drive" value="${esc(item.driveUrl||'')}" placeholder="https://drive.google.com/..."/>
+    </div>`;
+  return div;
+}
+
+function addNewsItem() {
+  document.getElementById('newsItems').appendChild(makeNewsCard({}));
+}
+
+function collectNews() {
+  return Array.from(document.querySelectorAll('#newsItems .item-card')).map(card => ({
+    title: card.querySelector('.nw-title').value.trim(),
+    emoji: card.querySelector('.nw-emoji').value.trim() || '📄',
+    category: card.querySelector('.nw-cat').value.trim() || undefined,
+    date: card.querySelector('.nw-date').value.trim() || undefined,
+    summary: card.querySelector('.nw-summary').value.trim() || undefined,
+    driveUrl: card.querySelector('.nw-drive').value.trim() || undefined,
+  })).filter(i => i.title);
+}
+
+// ── Decisions ─────────────────────────────
+function renderDecisions(items) {
+  const el = document.getElementById('decisions');
+  el.innerHTML = '';
+  items.forEach(item => el.appendChild(makeDecisionCard(item)));
+}
+
+function makeDecisionCard(item = {}) {
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.innerHTML = `
+    <button class="remove-btn" onclick="this.closest('.item-card').remove()">×</button>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Title *</label>
+        <input type="text" class="field-input dc-title" value="${esc(item.title||'')}" placeholder="Motion or resolution title"/>
+      </div>
+      <div>
+        <label class="field-label">Date</label>
+        <input type="text" class="field-input dc-date" value="${esc(item.date||'')}" placeholder="e.g. June 17, 2025"/>
+      </div>
+    </div>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Category</label>
+        <select class="field-input dc-cat">
+          <option value="" ${!item.category?'selected':''}>— none —</option>
+          <option value="Finance" ${item.category==='Finance'?'selected':''}>Finance</option>
+          <option value="Governance" ${item.category==='Governance'?'selected':''}>Governance</option>
+          <option value="Facilities" ${item.category==='Facilities'?'selected':''}>Facilities</option>
+          <option value="Personnel" ${item.category==='Personnel'?'selected':''}>Personnel</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">Vote Tally</label>
+        <input type="text" class="field-input dc-vote" value="${esc(item.vote||'')}" placeholder="e.g. 9–0"/>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label class="field-label">Description</label>
+      <textarea class="field-input dc-desc" rows="2" placeholder="What was decided…">${esc(item.description||'')}</textarea>
+    </div>
+    <div class="flex items-center gap-4">
+      <label class="flex items-center gap-2 text-sm text-bark-600 cursor-pointer">
+        <input type="checkbox" class="dc-unanimous" ${item.unanimous?'checked':''}/> Unanimous
+      </label>
+      <div class="flex-1">
+        <input type="url" class="field-input dc-drive" value="${esc(item.driveUrl||'')}" placeholder="Drive link to resolution (optional)"/>
+      </div>
+    </div>`;
+  return div;
+}
+
+function addDecision() {
+  const el = document.getElementById('decisions');
+  el.insertBefore(makeDecisionCard({}), el.firstChild);
+  el.firstElementChild.querySelector('.dc-title').focus();
+}
+
+function collectDecisions() {
+  return Array.from(document.querySelectorAll('#decisions .item-card')).map(card => ({
+    title: card.querySelector('.dc-title').value.trim(),
+    date: card.querySelector('.dc-date').value.trim() || undefined,
+    category: card.querySelector('.dc-cat').value || undefined,
+    vote: card.querySelector('.dc-vote').value.trim() || undefined,
+    description: card.querySelector('.dc-desc').value.trim() || undefined,
+    unanimous: card.querySelector('.dc-unanimous').checked,
+    driveUrl: card.querySelector('.dc-drive').value.trim() || undefined,
+  })).filter(i => i.title);
+}
+
+// ── Board Members ─────────────────────────
+function renderBoardMembers(members) {
+  const el = document.getElementById('boardMembers');
+  el.innerHTML = '';
+  members.forEach(m => el.appendChild(makeMemberCard(m)));
+}
+
+function makeMemberCard(m = {}) {
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  const hoursHtml = (m.volunteerHours||[]).map((h,i) => `
+    <div class="flex gap-2 mb-1 vol-row">
+      <input type="text" class="field-input vol-activity flex-1" value="${esc(h.activity||'')}" placeholder="Activity"/>
+      <input type="number" class="field-input vol-hours" style="width:90px" value="${h.hours||''}" placeholder="Hrs"/>
+      <button class="btn btn-clay text-xs px-2" onclick="this.closest('.vol-row').remove()">×</button>
+    </div>`).join('');
+
+  div.innerHTML = `
+    <button class="remove-btn" onclick="this.closest('.item-card').remove()">×</button>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Name *</label>
+        <input type="text" class="field-input bm-name" value="${esc(m.name||'')}" placeholder="Full name"/>
+      </div>
+      <div>
+        <label class="field-label">Role</label>
+        <input type="text" class="field-input bm-role" value="${esc(m.role||'')}" placeholder="e.g. Board Chair"/>
+      </div>
+    </div>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Email</label>
+        <input type="email" class="field-input bm-email" value="${esc(m.email||'')}" placeholder="email@school.org"/>
+      </div>
+      <div>
+        <label class="field-label">Committee(s)</label>
+        <input type="text" class="field-input bm-committee" value="${esc(m.committee||'')}" placeholder="e.g. Finance, Development"/>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="field-label">Term End</label>
+      <input type="text" class="field-input bm-term" value="${esc(m.termEnd||'')}" placeholder="e.g. June 2026"/>
+    </div>
+    <div>
+      <div class="flex items-center justify-between mb-2">
+        <label class="field-label mb-0">Volunteer Hours</label>
+        <button class="btn btn-bark text-xs" onclick="addVolRow(this)">+ Add Activity</button>
+      </div>
+      <div class="vol-rows space-y-1">${hoursHtml}</div>
+    </div>`;
+  return div;
+}
+
+function addVolRow(btn) {
+  const container = btn.closest('.item-card').querySelector('.vol-rows');
+  const row = document.createElement('div');
+  row.className = 'flex gap-2 mb-1 vol-row';
+  row.innerHTML = `
+    <input type="text" class="field-input vol-activity flex-1" placeholder="Activity"/>
+    <input type="number" class="field-input vol-hours" style="width:90px" placeholder="Hrs"/>
+    <button class="btn btn-clay text-xs px-2" onclick="this.closest('.vol-row').remove()">×</button>`;
+  container.appendChild(row);
+  row.querySelector('.vol-activity').focus();
+}
+
+function addBoardMember() {
+  document.getElementById('boardMembers').appendChild(makeMemberCard({}));
+}
+
+function collectBoardMembers() {
+  return Array.from(document.querySelectorAll('#boardMembers .item-card')).map(card => {
+    const hours = Array.from(card.querySelectorAll('.vol-row')).map(row => ({
+      activity: row.querySelector('.vol-activity').value.trim(),
+      hours: Number(row.querySelector('.vol-hours').value) || 0,
+    })).filter(h => h.activity);
+    return {
+      name: card.querySelector('.bm-name').value.trim(),
+      role: card.querySelector('.bm-role').value.trim() || undefined,
+      email: card.querySelector('.bm-email').value.trim() || undefined,
+      committee: card.querySelector('.bm-committee').value.trim() || undefined,
+      termEnd: card.querySelector('.bm-term').value.trim() || undefined,
+      volunteerHours: hours.length ? hours : undefined,
+    };
+  }).filter(m => m.name);
+}
+
+// ── Calendar ──────────────────────────────
+function renderCalendarEvents(events) {
+  const el = document.getElementById('calendarEvents');
+  el.innerHTML = '';
+  // Sort by date
+  [...events].sort((a,b) => a.date.localeCompare(b.date)).forEach(ev => el.appendChild(makeCalendarCard(ev)));
+}
+
+function makeCalendarCard(ev = {}) {
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.innerHTML = `
+    <button class="remove-btn" onclick="this.closest('.item-card').remove()">×</button>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Title *</label>
+        <input type="text" class="field-input cal-title" value="${esc(ev.title||'')}" placeholder="Event title"/>
+      </div>
+      <div>
+        <label class="field-label">Date (YYYY-MM-DD) *</label>
+        <input type="date" class="field-input cal-date" value="${esc(ev.date||'')}"/>
+      </div>
+    </div>
+    <div class="grid-2 mb-2">
+      <div>
+        <label class="field-label">Time</label>
+        <input type="text" class="field-input cal-time" value="${esc(ev.time||'')}" placeholder="6:30 PM – 8:30 PM"/>
+      </div>
+      <div>
+        <label class="field-label">Location</label>
+        <input type="text" class="field-input cal-location" value="${esc(ev.location||'')}" placeholder="Room 12"/>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <label class="field-label">Description</label>
+        <input type="text" class="field-input cal-desc" value="${esc(ev.description||'')}" placeholder="Optional note…"/>
+      </div>
+      <div>
+        <label class="field-label">Drive Link</label>
+        <input type="url" class="field-input cal-drive" value="${esc(ev.driveUrl||'')}" placeholder="https://drive.google.com/..."/>
+      </div>
+    </div>`;
+  return div;
+}
+
+function addCalendarEvent() {
+  document.getElementById('calendarEvents').appendChild(makeCalendarCard({}));
+}
+
+function collectCalendarEvents() {
+  return Array.from(document.querySelectorAll('#calendarEvents .item-card')).map(card => ({
+    title: card.querySelector('.cal-title').value.trim(),
+    date: card.querySelector('.cal-date').value,
+    time: card.querySelector('.cal-time').value.trim() || undefined,
+    location: card.querySelector('.cal-location').value.trim() || undefined,
+    description: card.querySelector('.cal-desc').value.trim() || undefined,
+    driveUrl: card.querySelector('.cal-drive').value.trim() || undefined,
+  })).filter(e => e.title && e.date)
+    .sort((a,b) => a.date.localeCompare(b.date));
+}
+
+// ── Build & download JSON ─────────────────
+function downloadJSON() {
+  if (!data) { toast('Load a JSON file first'); return; }
+
+  const out = {
+    _comment: data._comment || 'Edit this file to update the board portal. Changes appear within 5 minutes.',
+    _lastUpdated: new Date().toISOString().split('T')[0],
+    meetingMonth: document.getElementById('meetingMonth').value.trim(),
+    announcement: {
+      label: document.getElementById('announcementLabel').value.trim(),
+      text: document.getElementById('announcementText').value.trim(),
+      url: document.getElementById('announcementUrl').value.trim(),
+    },
+    chairMessage: document.getElementById('chairMessage').value.trim() || undefined,
+    agenda: {
+      date: document.getElementById('agendaDate').value.trim(),
+      location: document.getElementById('agendaLocation').value.trim() || undefined,
+      driveUrl: document.getElementById('agendaDriveUrl').value.trim() || undefined,
+      items: collectAgendaItems(),
+    },
+    actionItems: collectActionItems(),
+    fundraising: {
+      campaign: {
+        name: document.getElementById('campaignName').value.trim(),
+        description: document.getElementById('campaignDesc').value.trim() || undefined,
+        goal: Number(document.getElementById('campaignGoal').value) || 0,
+        raised: Number(document.getElementById('campaignRaised').value) || 0,
+        totalDonors: Number(document.getElementById('campaignDonors').value) || undefined,
+        boardMembersGiven: Number(document.getElementById('boardGiven').value) || 0,
+        boardMembersTotal: Number(document.getElementById('boardTotal').value) || 0,
+        deadline: document.getElementById('campaignDeadline').value.trim() || undefined,
+      },
+      prospects: collectProspects(),
+      deadlines: collectDeadlines(),
+    },
+    news: collectNews(),
+    decisions: collectDecisions(),
+    boardMembers: collectBoardMembers(),
+    calendar: collectCalendarEvents(),
+    documents: data.documents || [],
+  };
+
+  const blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'board-data.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('✅ board-data.json downloaded — drag it into your GitHub repo to publish');
+}
+
+// ── Toast ─────────────────────────────────
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── Utility ───────────────────────────────
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+{
+  "_comment": "Edit this file to update the board portal. Changes appear within 5 minutes.",
+  "_lastUpdated": "2025-06-01",
+
+  "meetingMonth": "June 2025",
+
+  "announcement": {
+    "label": "Meeting Rescheduled:",
+    "text": "The June board meeting has moved to June 17 at 6:30 PM due to the school calendar conflict.",
+    "url": ""
+  },
+
+  "chairMessage": "Welcome to this month's board portal. Please review the agenda and financial report prior to our June 17 meeting. A reminder that we are 73% of the way to our Annual Fund goal — every board gift matters. Reach out with any questions. — Board Chair",
+
+  "agenda": {
+    "date": "Tuesday, June 17, 2025 · 6:30 PM",
+    "location": "SWS Main Building, Room 12",
+    "driveUrl": "https://drive.google.com/drive/folders/YOUR_AGENDA_FOLDER_ID",
+    "items": [
+      {
+        "title": "Call to Order & Land Acknowledgment",
+        "type": "info",
+        "duration": "5 min",
+        "description": "Opening remarks by the Board Chair."
+      },
+      {
+        "title": "Approval of May Meeting Minutes",
+        "type": "action",
+        "duration": "5 min",
+        "description": "Review and vote to approve minutes from the May 2025 meeting.",
+        "driveUrl": "https://drive.google.com/file/d/YOUR_MAY_MINUTES_ID"
+      },
+      {
+        "title": "Financial Report — May 2025",
+        "type": "info",
+        "duration": "15 min",
+        "description": "Treasurer presents the monthly financial summary.",
+        "driveUrl": "https://drive.google.com/file/d/YOUR_FINANCIAL_REPORT_ID"
+      },
+      {
+        "title": "Annual Fund Update & Board Giving",
+        "type": "discussion",
+        "duration": "10 min",
+        "description": "Development Director presents campaign progress. Discussion of remaining board giving and peer-to-peer asks.",
+        "driveUrl": "https://drive.google.com/file/d/YOUR_FUND_UPDATE_ID"
+      },
+      {
+        "title": "Faculty & Staff Update",
+        "type": "info",
+        "duration": "10 min",
+        "description": "Administrator report on staffing and professional development."
+      },
+      {
+        "title": "Strategic Planning — Facility Review",
+        "type": "discussion",
+        "duration": "20 min",
+        "description": "Discussion of facilities assessment findings and deferred maintenance priorities.",
+        "driveUrl": "https://drive.google.com/file/d/YOUR_FACILITIES_REPORT_ID"
+      },
+      {
+        "title": "New Business & Announcements",
+        "type": "info",
+        "duration": "10 min"
+      },
+      {
+        "title": "Closing & Next Meeting",
+        "type": "info",
+        "duration": "5 min"
+      }
+    ]
+  },
+
+  "actionItems": [
+    {
+      "title": "Research three vendors for HVAC replacement in Building B",
+      "owner": "Marcus Webb",
+      "status": "inprogress",
+      "dueDate": "June 17, 2025",
+      "fromMeeting": "May 13, 2025",
+      "notes": "Two quotes received. Third scheduled for June 10."
+    },
+    {
+      "title": "Confirm 2025–26 re-enrollment outreach plan with Administrator",
+      "owner": "Priya Okafor",
+      "status": "done",
+      "dueDate": "June 1, 2025",
+      "fromMeeting": "May 13, 2025"
+    },
+    {
+      "title": "Draft thank-you letter template for Annual Fund donors",
+      "owner": "Sarah Hernandez",
+      "status": "open",
+      "dueDate": "June 17, 2025",
+      "fromMeeting": "May 13, 2025"
+    },
+    {
+      "title": "Review and sign updated Conflict of Interest policy",
+      "owner": "All Board Members",
+      "status": "inprogress",
+      "dueDate": "June 17, 2025",
+      "fromMeeting": "April 8, 2025",
+      "notes": "7 of 9 signatures collected. Please see secretary if you haven't signed."
+    },
+    {
+      "title": "Identify one new major gift prospect from personal network",
+      "owner": "All Board Members",
+      "status": "open",
+      "dueDate": "June 17, 2025",
+      "fromMeeting": "May 13, 2025"
+    },
+    {
+      "title": "Submit board bio and photo for updated website",
+      "owner": "David Kim",
+      "status": "open",
+      "dueDate": "June 10, 2025",
+      "fromMeeting": "April 8, 2025"
+    }
+  ],
+
+  "fundraising": {
+    "campaign": {
+      "name": "2024–25 Annual Fund",
+      "description": "Our Annual Fund supports faculty salaries, curriculum materials, and financial aid for families in need.",
+      "goal": 120000,
+      "raised": 87500,
+      "totalDonors": 142,
+      "boardMembersGiven": 7,
+      "boardMembersTotal": 9,
+      "deadline": "June 30"
+    },
+    "prospects": [
+      {
+        "name": "The Hartwell Family",
+        "stage": "Solicitation",
+        "askAmount": 10000,
+        "boardLead": "Sarah Hernandez"
+      },
+      {
+        "name": "Community Arts Foundation",
+        "stage": "Cultivation",
+        "askAmount": 15000,
+        "boardLead": "Marcus Webb"
+      },
+      {
+        "name": "Anonymous Alumni Family",
+        "stage": "Stewardship",
+        "askAmount": 5000,
+        "boardLead": "Priya Okafor"
+      },
+      {
+        "name": "River Valley Community Trust",
+        "stage": "Identification",
+        "askAmount": 25000,
+        "boardLead": "Board Chair"
+      }
+    ],
+    "deadlines": [
+      {
+        "date": "2025-06-15",
+        "title": "PA Dept. of Education Arts Grant — LOI Due",
+        "description": "Letter of intent for $8,000 arts programming grant. Contact Development Director for draft."
+      },
+      {
+        "date": "2025-06-30",
+        "title": "Annual Fund Campaign Close",
+        "description": "Final day to record gifts toward the 2024–25 Annual Fund goal of $120,000."
+      },
+      {
+        "date": "2025-08-01",
+        "title": "Waldorf Educational Foundation Grant — Full Application",
+        "description": "Full proposal due for $20,000 teacher training support grant."
+      },
+      {
+        "date": "2025-09-15",
+        "title": "Fall Benefit Gala — Planning Kickoff",
+        "description": "Board Development Committee meets to finalize theme, venue, and board giving commitments for fall event."
+      }
+    ]
+  },
+
+  "calendar": [
+    {
+      "date": "2025-05-13",
+      "title": "Board Meeting — May",
+      "time": "6:30 PM – 8:30 PM",
+      "location": "SWS Main Building, Room 12",
+      "driveUrl": "https://drive.google.com/file/d/YOUR_MAY_MATERIALS_ID"
+    },
+    {
+      "date": "2025-06-17",
+      "title": "Board Meeting — June (Rescheduled)",
+      "time": "6:30 PM – 8:30 PM",
+      "location": "SWS Main Building, Room 12",
+      "description": "Rescheduled from June 10. Annual Fund close-out review included.",
+      "driveUrl": "https://drive.google.com/drive/folders/YOUR_JUNE_FOLDER_ID"
+    },
+    {
+      "date": "2025-06-20",
+      "title": "School Year-End Celebration",
+      "time": "4:00 PM – 6:00 PM",
+      "location": "SWS Campus Grounds",
+      "description": "Board members encouraged to attend."
+    },
+    {
+      "date": "2025-08-12",
+      "title": "Board Retreat / Planning Day",
+      "time": "9:00 AM – 4:00 PM",
+      "location": "TBD",
+      "description": "Annual strategic planning day. Details forthcoming."
+    },
+    {
+      "date": "2025-09-09",
+      "title": "Board Meeting — September",
+      "time": "6:30 PM – 8:30 PM",
+      "location": "SWS Main Building, Room 12"
+    },
+    {
+      "date": "2025-10-14",
+      "title": "Board Meeting — October",
+      "time": "6:30 PM – 8:30 PM",
+      "location": "SWS Main Building, Room 12"
+    },
+    {
+      "date": "2025-10-25",
+      "title": "Fall Benefit Gala",
+      "time": "6:00 PM – 10:00 PM",
+      "location": "TBD",
+      "description": "Annual fundraising event. All board members expected to attend and bring guests."
+    },
+    {
+      "date": "2025-11-11",
+      "title": "Board Meeting — November",
+      "time": "6:30 PM – 8:30 PM",
+      "location": "SWS Main Building, Room 12"
+    },
+    {
+      "date": "2025-12-09",
+      "title": "Board Meeting — December",
+      "time": "6:30 PM – 8:30 PM",
+      "location": "SWS Main Building, Room 12"
+    }
+  ],
+
+  "news": [
+    {
+      "emoji": "🌱",
+      "title": "Spring Enrollment Update",
+      "category": "Enrollment",
+      "date": "May 28, 2025",
+      "summary": "Re-enrollment for 2025–26 is at 87%, with 12 new family inquiries in May. The waitlist for Grades 1–3 has grown to 8 families.",
+      "driveUrl": "https://drive.google.com/file/d/YOUR_ENROLLMENT_REPORT_ID"
+    },
+    {
+      "emoji": "🏛️",
+      "title": "Facilities Assessment — Key Findings",
+      "category": "Facilities",
+      "date": "May 22, 2025",
+      "summary": "The third-party assessment identified roof repairs and HVAC in Building B as highest priority. Full report with cost estimates now available.",
+      "driveUrl": "https://drive.google.com/file/d/YOUR_FACILITIES_ASSESSMENT_ID"
+    },
+    {
+      "emoji": "🎓",
+      "title": "Teacher Certification Update",
+      "category": "Faculty",
+      "date": "May 18, 2025",
+      "summary": "Two faculty members completed Waldorf teacher training this spring. One new hire confirmed for Grade 4 starting August.",
+      "driveUrl": "https://drive.google.com/file/d/YOUR_FACULTY_UPDATE_ID"
+    },
+    {
+      "emoji": "💰",
+      "title": "Grant Awarded — Arts Program",
+      "category": "Development",
+      "date": "May 10, 2025",
+      "summary": "SWS received a $15,000 grant from the Community Arts Foundation to expand instrumental music and eurythmy programming.",
+      "driveUrl": "https://drive.google.com/file/d/YOUR_GRANT_ANNOUNCEMENT_ID"
+    }
+  ],
+
+  "decisions": [
+    {
+      "date": "May 13, 2025",
+      "title": "Approved May 2025 Financial Report",
+      "category": "Finance",
+      "description": "Board accepted the May financial report as presented by the Treasurer.",
+      "vote": "9–0",
+      "unanimous": true
+    },
+    {
+      "date": "May 13, 2025",
+      "title": "Authorized facilities assessment vendor engagement",
+      "category": "Facilities",
+      "description": "Board authorized the Administrator to engage BuildRight Associates for a facility needs assessment, not to exceed $4,500.",
+      "vote": "8–1",
+      "unanimous": false,
+      "driveUrl": "https://drive.google.com/file/d/YOUR_RESOLUTION_001_ID"
+    },
+    {
+      "date": "April 8, 2025",
+      "title": "Approved 2025–26 Faculty Salary Schedule",
+      "category": "Personnel",
+      "description": "Board approved a 3.5% cost-of-living increase for all returning faculty, effective August 2025.",
+      "vote": "9–0",
+      "unanimous": true,
+      "driveUrl": "https://drive.google.com/file/d/YOUR_RESOLUTION_002_ID"
+    },
+    {
+      "date": "April 8, 2025",
+      "title": "Ratified Conflict of Interest Policy revision",
+      "category": "Governance",
+      "description": "Board ratified updated Conflict of Interest policy as revised by legal counsel. Annual signature required from all members.",
+      "vote": "9–0",
+      "unanimous": true,
+      "driveUrl": "https://drive.google.com/file/d/YOUR_COI_REVISION_ID"
+    },
+    {
+      "date": "March 11, 2025",
+      "title": "Approved Annual Fund campaign goal of $120,000",
+      "category": "Finance",
+      "description": "Board set the 2024–25 Annual Fund goal at $120,000, a 10% increase over last year, with a campaign close date of June 30, 2025.",
+      "vote": "9–0",
+      "unanimous": true
+    },
+    {
+      "date": "March 11, 2025",
+      "title": "Elected David Kim as Board Treasurer",
+      "category": "Governance",
+      "description": "Following the resignation of the previous Treasurer, the board elected David Kim to serve as Treasurer for the remainder of the 2024–25 term.",
+      "vote": "8–0–1",
+      "unanimous": false,
+      "driveUrl": "https://drive.google.com/file/d/YOUR_ELECTION_RESOLUTION_ID"
+    }
+  ],
+
+  "boardMembers": [
+    {
+      "name": "Eleanor Voss",
+      "role": "Board Chair",
+      "email": "evoss@susquehannawaldorf.org",
+      "committee": "Executive, Development",
+      "termEnd": "June 2026",
+      "volunteerHours": [
+        { "activity": "Committee meetings", "hours": 24 },
+        { "activity": "Donor cultivation events", "hours": 12 },
+        { "activity": "Facilities walkthrough", "hours": 3 }
+      ]
+    },
+    {
+      "name": "David Kim",
+      "role": "Treasurer",
+      "email": "dkim@susquehannawaldorf.org",
+      "committee": "Finance",
+      "termEnd": "June 2025",
+      "volunteerHours": [
+        { "activity": "Monthly financial review", "hours": 18 },
+        { "activity": "Audit preparation", "hours": 8 }
+      ]
+    },
+    {
+      "name": "Sarah Hernandez",
+      "role": "Secretary",
+      "email": "shernandez@susquehannawaldorf.org",
+      "committee": "Executive, Development",
+      "termEnd": "June 2027",
+      "volunteerHours": [
+        { "activity": "Meeting minutes & records", "hours": 20 },
+        { "activity": "Spring Faire planning", "hours": 15 },
+        { "activity": "Donor thank-you calls", "hours": 6 }
+      ]
+    },
+    {
+      "name": "Marcus Webb",
+      "role": "Board Member",
+      "email": "mwebb@susquehannawaldorf.org",
+      "committee": "Facilities",
+      "termEnd": "June 2026",
+      "volunteerHours": [
+        { "activity": "Facilities committee", "hours": 16 },
+        { "activity": "Campus work days", "hours": 22 }
+      ]
+    },
+    {
+      "name": "Priya Okafor",
+      "role": "Board Member",
+      "email": "pokafor@susquehannawaldorf.org",
+      "committee": "Enrollment & Marketing",
+      "termEnd": "June 2025",
+      "volunteerHours": [
+        { "activity": "Open house events", "hours": 10 },
+        { "activity": "Enrollment committee", "hours": 12 }
+      ]
+    },
+    {
+      "name": "James Thornton",
+      "role": "Board Member",
+      "email": "jthornton@susquehannawaldorf.org",
+      "committee": "Development",
+      "termEnd": "June 2027",
+      "volunteerHours": [
+        { "activity": "Gala committee", "hours": 18 },
+        { "activity": "Donor meetings", "hours": 8 }
+      ]
+    },
+    {
+      "name": "Lucia Brennan",
+      "role": "Board Member",
+      "email": "lbrennan@susquehannawaldorf.org",
+      "committee": "Finance, Governance",
+      "termEnd": "June 2026",
+      "volunteerHours": [
+        { "activity": "Policy review", "hours": 10 },
+        { "activity": "Finance committee", "hours": 14 }
+      ]
+    },
+    {
+      "name": "Thomas Nguyen",
+      "role": "Board Member",
+      "email": "tnguyen@susquehannawaldorf.org",
+      "committee": "Facilities",
+      "termEnd": "June 2025",
+      "volunteerHours": [
+        { "activity": "Facilities committee", "hours": 14 },
+        { "activity": "Campus work days", "hours": 18 }
+      ]
+    },
+    {
+      "name": "Amara Diallo",
+      "role": "Board Member",
+      "email": "adiallo@susquehannawaldorf.org",
+      "committee": "Enrollment & Marketing, Development",
+      "termEnd": "June 2027",
+      "volunteerHours": [
+        { "activity": "Marketing materials", "hours": 20 },
+        { "activity": "Community outreach", "hours": 14 }
+      ]
+    }
+  ],
+
+  "documents": [
+    {
+      "category": "Governance",
+      "files": [
+        { "emoji": "📋", "title": "Board By-Laws (Amended June 2025)", "description": "Official governing document", "driveUrl": "https://drive.google.com/file/d/YOUR_BYLAWS_ID" },
+        { "emoji": "📅", "title": "Meeting Minutes Archive", "description": "All approved meeting minutes", "driveUrl": "https://drive.google.com/drive/folders/YOUR_MINUTES_FOLDER_ID" },
+        { "emoji": "👤", "title": "Board Member Directory", "description": "Contact info & committee assignments", "driveUrl": "https://drive.google.com/file/d/YOUR_DIRECTORY_ID" },
+        { "emoji": "🔒", "title": "Conflict of Interest Policy", "description": "Board ethics — signature required", "driveUrl": "https://drive.google.com/file/d/YOUR_COI_POLICY_ID" }
+      ]
+    },
+    {
+      "category": "Finance",
+      "files": [
+        { "emoji": "📊", "title": "Monthly Financial Reports", "description": "Current and past monthly financials", "driveUrl": "https://drive.google.com/drive/folders/YOUR_FINANCIALS_FOLDER_ID" },
+        { "emoji": "📈", "title": "2025–26 Budget Draft", "description": "Proposed budget under review", "driveUrl": "https://drive.google.com/file/d/YOUR_BUDGET_DRAFT_ID" },
+        { "emoji": "🔍", "title": "Audit Report 2023–24", "description": "External financial audit", "driveUrl": "https://drive.google.com/file/d/YOUR_AUDIT_ID" }
+      ]
+    },
+    {
+      "category": "Development",
+      "files": [
+        { "emoji": "🌟", "title": "Annual Fund Campaign Materials", "description": "Case for support, donor letters", "driveUrl": "https://drive.google.com/drive/folders/YOUR_ANNUAL_FUND_FOLDER_ID" },
+        { "emoji": "🗓️", "title": "Fall Gala Planning Folder", "description": "Event planning docs & budget", "driveUrl": "https://drive.google.com/drive/folders/YOUR_GALA_FOLDER_ID" },
+        { "emoji": "📋", "title": "Grant Tracking Sheet", "description": "All active and prospective grants", "driveUrl": "https://drive.google.com/file/d/YOUR_GRANT_TRACKER_ID" }
+      ]
+    },
+    {
+      "category": "Strategic Planning",
+      "files": [
+        { "emoji": "🗺️", "title": "Strategic Plan 2024–2027", "description": "Three-year school strategic plan", "driveUrl": "https://drive.google.com/file/d/YOUR_STRATEGIC_PLAN_ID" },
+        { "emoji": "🏗️", "title": "Facilities Assessment Report", "description": "Full third-party facilities review", "driveUrl": "https://drive.google.com/file/d/YOUR_FACILITIES_ASSESSMENT_ID" }
+      ]
+    },
+    {
+      "category": "Policies & Handbooks",
+      "files": [
+        { "emoji": "📖", "title": "Student & Family Handbook 2024–25", "description": "", "driveUrl": "https://drive.google.com/file/d/YOUR_HANDBOOK_ID" },
+        { "emoji": "⚖️", "title": "Personnel Policies", "description": "HR policies and procedures", "driveUrl": "https://drive.google.com/file/d/YOUR_PERSONNEL_POLICIES_ID" }
+      ]
+    }
+  ]
+}
